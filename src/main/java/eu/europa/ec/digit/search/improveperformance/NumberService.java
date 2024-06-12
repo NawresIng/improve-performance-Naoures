@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Service;
@@ -39,16 +41,35 @@ public class NumberService {
 
     }
 
+    /**
+     * findSmallestDuplicateImproved: is the improved version
+     * for the method findSmallestDuplicate
+     *
+     * @param data : List of random data
+     * @return the smallest Duplicate element in a list of data
+     */
     public Integer findSmallestDuplicateImproved(List<Integer> data) {
-        
-        throw new UnsupportedOperationException("Not implemented.");
+
+        Set<Integer> firstTime = new HashSet<>();
+        Set<Integer> duplicates = new HashSet<>();
+
+        for (int i = 0; i < data.size(); i++) {
+
+            if (!firstTime.add(data.get(i))) {
+                //if element not added to the firstTime list  that means we got it before
+                log.info("found duplicate for improved method {}", data.get(i));
+                duplicates.add(data.get(i));
+            }
+        }
+
+        return duplicates.stream().sorted().findFirst().orElse(null);
 
     }
 
     public List<Integer> generateData() {
 
         List<Integer> data = IntStream.range(0, SAMPLE_SIZE).boxed().collect(toList());
-        
+
         data.add(data.get(random.nextInt(data.size())));
         log.info("first duplicate number is: {}", data.get(data.size() - 1));
         data.add(data.get(random.nextInt(data.size())));
