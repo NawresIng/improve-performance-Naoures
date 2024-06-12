@@ -50,22 +50,12 @@ public class NumberService {
      */
     public Integer findSmallestDuplicateImproved(List<Integer> data) {
 
-        Set<Integer> firstTime = new HashSet<>();
         Set<Integer> duplicates = new HashSet<>();
 
-        for (int i = 0; i < data.size(); i++) {
-
-            if (!firstTime.add(data.get(i))) {
-                //if element not added to the firstTime list  that means we got it before
-                log.info("found duplicate for improved method {}", data.get(i));
-                duplicates.add(data.get(i));
-            }
-        }
-
-        return duplicates.stream().sorted().findFirst().orElse(null);
+        return data.stream().filter(ele -> !duplicates.add(ele)).sorted().findFirst().orElse(null);
 
     }
-
+    
     public List<Integer> generateData() {
 
         List<Integer> data = IntStream.range(0, SAMPLE_SIZE).boxed().collect(toList());
