@@ -52,10 +52,10 @@ public class NumberService {
 
         Set<Integer> duplicates = new HashSet<>();
 
-        return data.stream().filter(ele -> !duplicates.add(ele)).sorted().findFirst().orElse(null);
+        return data.stream().filter(ele -> !duplicates.add(ele)).min(Integer::compareTo).orElse(null);
 
     }
-    
+
     public List<Integer> generateData() {
 
         List<Integer> data = IntStream.range(0, SAMPLE_SIZE).boxed().collect(toList());
